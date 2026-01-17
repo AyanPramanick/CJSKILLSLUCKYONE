@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Computer Jagat Skills Lucky Ticket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ================= GLOBAL ================= */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial;
+    background:
+        radial-gradient(circle at top, #2a0033, #050008 70%),
+        linear-gradient(120deg, #0ff2, #a0f2);
+    color: #00f6ff;
+    overflow-y: auto;
+}
+
+/* ================= SCAN LINES ================= */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.03),
+        rgba(255,255,255,0.03) 1px,
+        transparent 3px,
+        transparent 7px
+    );
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ================= HEADER ================= */
+.header {
+    text-align: center;
+    padding: 30px 10px 10px;
+    font-family: Algerian, "Copperplate Gothic Bold", serif;
+    font-size: 42px;
+    letter-spacing: 4px;
+    color: #ff6cff;
+    text-shadow:
+        0 0 15px #ff6cff,
+        0 0 40px #a855f7,
+        0 0 80px #6d28d9;
+    z-index: 5;
+    position: relative;
+}
+
+/* ================= AI CIRCUIT BACKGROUND ================= */
+.ai-circuit {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(90deg, rgba(0,255,255,0.15) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,0,255,0.12) 1px, transparent 1px);
+    background-size: 80px 80px;
+    animation: circuitMove 40s linear infinite;
+    z-index: 0;
+}
+
+@keyframes circuitMove {
+    from { background-position: 0 0; }
+    to { background-position: 800px 400px; }
+}
+
+/* ================= AI HUD RING ================= */
+.ai-hud-ring {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 2px dashed rgba(0,255,255,0.4);
+    transform: translate(-50%, -50%);
+    animation: hudSpin 8s linear infinite;
+    box-shadow: 0 0 40px rgba(255,0,255,0.4);
+    z-index: 2;
+    pointer-events: none;
+}
+
+@keyframes hudSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ================= GEARS (ENHANCED) ================= */
+.gear {
+    position: fixed;
+    border: 8px solid rgba(168,85,247,0.25);
+    border-radius: 50%;
+    animation: spin linear infinite;
+    z-index: 0;
+    box-shadow: 0 0 50px rgba(168,85,247,0.5);
+}
+.gear::before {
+    content: "";
+    position: absolute;
+    inset: 14px;
+    border: 6px dashed rgba(0,255,255,0.35);
+    border-radius: 50%;
+}
+
+#gear1 { width: 260px; height: 260px; top: 28%; left: 4%; animation-duration: 16s; }
+#gear2 { width: 190px; height: 190px; bottom: 8%; left: 12%; animation-duration: 12s; animation-direction: reverse; }
+#gear3 { width: 320px; height: 320px; top: 22%; right: 4%; animation-duration: 20s; }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ================= LAYOUT ================= */
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 4;
+    flex-wrap: wrap;
+}
+
+/* ================= PANELS ================= */
+.panel, .side-panel {
+    background: rgba(10,0,20,0.85);
+    border-radius: 20px;
+    padding: 26px;
+    backdrop-filter: blur(8px);
+}
+
+.panel {
+    width: 420px;
+    border: 2px solid #a855f7;
+    box-shadow:
+        0 0 30px #a855f7aa,
+        inset 0 0 25px #6d28d955;
+    text-align: center;
+}
+
+.side-panel {
+    width: 260px;
+    border: 2px solid #00f6ff;
+    box-shadow:
+        0 0 25px #00f6ffaa,
+        inset 0 0 20px #00f6ff55;
+}
+
+/* ================= HOLOGRAM NUMBER ================= */
+#number {
+    font-size: 76px;
+    margin: 20px 0;
+    color: #00f6ff;
+    position: relative;
+    text-shadow:
+        0 0 20px #00f6ff,
+        0 0 60px #a855f7,
+        0 0 120px #6d28d9;
+    animation: holoPulse 2s ease-in-out infinite;
+}
+
+@keyframes holoPulse {
+    0%,100% { filter: brightness(1); }
+    50% { filter: brightness(1.4); }
+}
+
+/* ================= MESSAGE ================= */
+#message {
+    font-size: 26px;
+    color: #7cfcff;
+    text-shadow: 0 0 25px #00f6ff;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<div class="ai-circuit"></div>
+<div class="ai-hud-ring"></div>
+
+<div class="header">Computer Jagat Skills Lucky Ticket</div>
+
+<div class="gear" id="gear1"></div>
+<div class="gear" id="gear2"></div>
+<div class="gear" id="gear3"></div>
+
+<div class="container">
+
+<div class="panel">
+    <img src="logo.png" width="110"><br>
+    <h2>⚙ RANDOM PICKER ⚙</h2>
+
+    <input id="start" type="number" placeholder="Start Number">
+    <input id="end" type="number" placeholder="End Number">
+    <input id="loops" type="number" placeholder="Loop Count">
+
+    <div id="number">?</div>
+    <div id="message"></div>
+
+    <button onclick="startPicker()">START</button>
+    <button onclick="runAgain()">RUN AGAIN</button>
+    <button onclick="goFullscreen()">🎥 STAGE MODE</button>
+</div>
+
+<div class="side-panel">
+    <h3>Selected Numbers</h3>
+    <div id="selectedList"></div>
+</div>
+
+</div>
+
+<audio id="cheer" src="cheers.mp3"></audio>
+
+<script>
+let availableNumbers = [];
+let initialized = false;
+
+function startPicker() {
+    const s = +start.value, e = +end.value, l = +loops.value;
+    if (isNaN(s) || isNaN(e) || isNaN(l)) return alert("Invalid Input");
+
+    if (!initialized) {
+        availableNumbers = [];
+        for (let i = s; i <= e; i++) availableNumbers.push(i);
+        initialized = true;
+    }
+    if (!availableNumbers.length) return;
+
+    let count = 0, index = 0;
+    const interval = setInterval(() => {
+        index = Math.floor(Math.random() * availableNumbers.length);
+        number.innerHTML = availableNumbers[index];
+        if (++count >= l) {
+            clearInterval(interval);
+            finalizePick(index);
+        }
+    }, 200);
+}
+
+function finalizePick(i) {
+    const picked = availableNumbers.splice(i, 1)[0];
+    number.innerHTML = picked;
+    message.innerHTML = "🎉 CONGRATULATIONS 🎉";
+    cheer.play();
+    confettiBlast();
+
+    const div = document.createElement("div");
+    div.textContent = picked;
+    div.style.color = "#ffe600";
+    div.style.textAlign = "center";
+    selectedList.appendChild(div);
+}
+
+function runAgain() {
+    message.innerHTML = "";
+}
+
+function confettiBlast() {
+    for (let i = 0; i < 200; i++) {
+        const c = document.createElement("div");
+        c.className = "confetti";
+        c.style.left = Math.random() * window.innerWidth + "px";
+        c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        c.style.animationDuration = (Math.random()*2+2)+"s";
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 5000);
+    }
+}
+
+function goFullscreen() {
+    document.documentElement.requestFullscreen();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Computer Jagat Skills Lucky Ticket</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===== GLOBAL ===== */
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Segoe UI, Arial;
+    background: radial-gradient(circle at top, #2a0033, #050008);
+    color: #00f6ff;
+}
+
+/* ===== AI BACKGROUND ===== */
+.ai-bg {
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0,255,255,0.15) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(255,0,255,0.15) 1px, transparent 1px);
+    background-size: 90px 90px;
+    animation: bgMove 40s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+}
+@keyframes bgMove {
+    from { background-position: 0 0; }
+    to { background-position: 800px 400px; }
+}
+
+/* ===== HEADING ===== */
+.header {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 30px 10px 20px;
+    font-family: Algerian, "Copperplate Gothic Bold", serif;
+    font-size: 50px;
+    color: #ff6cff;
+    text-shadow: 0 0 25px #a855f7, 0 0 60px #6d28d9;
+}
+
+/* ===== GEARS ===== */
+.gear {
+    position: fixed;
+    border: 10px solid rgba(168,85,247,0.35);
+    border-radius: 50%;
+    animation: spin linear infinite;
+    z-index: 1;
+    pointer-events: none;
+}
+.gear::before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 8px dashed rgba(0,255,255,0.35);
+    border-radius: 50%;
+}
+#gear1 { width: 260px; height: 260px; left: 3%; top: 40%; animation-duration: 18s; }
+#gear2 { width: 180px; height: 180px; left: 12%; bottom: 8%; animation-duration: 14s; animation-direction: reverse; }
+#gear3 { width: 300px; height: 300px; right: 4%; top: 45%; animation-duration: 22s; }
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ===== CONTENT ===== */
+.content {
+    position: relative;
+    z-index: 3;
+    padding: 20px 40px 60px;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.panel, .side-panel {
+    background: rgba(0,0,0,0.85);
+    border-radius: 20px;
+    padding: 22px;
+}
+
+.panel {
+    width: 400px;
+    border: 3px solid #a855f7;
+    text-align: center;
+}
+
+.side-panel {
+    width: 260px;
+    border: 3px solid #00f6ff;
+}
+
+.side-panel h3 {
+    text-align: center;
+    font-size: 26px;
+}
+
+/* ===== INPUTS ===== */
+input {
+    width: 90%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 20px;
+    background: black;
+    border: 2px solid #00f6ff;
+    color: #00f6ff;
+    border-radius: 10px;
+}
+
+/* ===== BUTTONS ===== */
+button {
+    padding: 14px 28px;
+    margin: 8px;
+    font-size: 18px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-weight: bold;
+    background: linear-gradient(90deg, #00f6ff, #a855f7);
+}
+
+/* ===== DISPLAY ===== */
+#number {
+    font-size: 80px;
+    margin: 14px 0;
+    color: #00f6ff;
+    text-shadow: 0 0 35px #a855f7;
+    position: relative;
+    z-index: 6;
+}
+
+#number.winner {
+    animation: spotlight 1.5s ease-in-out infinite;
+}
+
+@keyframes spotlight {
+    0%,100% { box-shadow: 0 0 40px #00f6ff; }
+    50% { box-shadow: 0 0 120px #ffe600; }
+}
+
+#message {
+    font-size: 32px;
+    color: #00ff88;
+}
+
+/* ===== CONFETTI ===== */
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 12px;
+    height: 12px;
+    z-index: 9999;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ===== FIREWORKS ===== */
+.firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: white;
+    animation: explode 1.2s ease-out forwards;
+    z-index: 9999;
+}
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ai-bg"></div>
+
+<div class="header">Computer Jagat Skills Lucky Ticket</div>
+
+<div class="gear" id="gear1"></div>
+<div class="gear" id="gear2"></div>
+<div class="gear" id="gear3"></div>
+
+<div class="content">
+<div class="wrapper">
+
+<div class="panel">
+    <img src="logo.png" width="110"><br>
+
+    <input id="startNum" placeholder="Start Number">
+    <input id="endNum" placeholder="End Number">
+    <input id="loopCount" placeholder="Loop Count">
+
+    <div id="number">?</div>
+    <div id="message"></div>
+
+    <button id="startBtn">START</button>
+    <button id="resetBtn">RESET</button>
+</div>
+
+<div class="side-panel">
+    <h3>Selected Numbers</h3>
+    <div id="selectedList" style="font-size:22px;text-align:center;"></div>
+</div>
+
+</div>
+</div>
+
+<audio id="pickerSound" src="picker.mp3" loop></audio>
+<audio id="cheerSound" src="cheers.mp3"></audio>
+
+<script>
+const startBtn = document.getElementById("startBtn");
+const resetBtn = document.getElementById("resetBtn");
+const startNum = document.getElementById("startNum");
+const endNum = document.getElementById("endNum");
+const loopCount = document.getElementById("loopCount");
+const numberEl = document.getElementById("number");
+const messageEl = document.getElementById("message");
+const selectedList = document.getElementById("selectedList");
+const pickerSound = document.getElementById("pickerSound");
+const cheerSound = document.getElementById("cheerSound");
+
+let numbers = [], initialized = false;
+
+startBtn.onclick = () => {
+    const s = +startNum.value, e = +endNum.value, l = +loopCount.value;
+    if (isNaN(s) || isNaN(e) || isNaN(l)) return alert("Enter valid values");
+
+    if (!initialized) {
+        numbers = [];
+        for (let i = s; i <= e; i++) numbers.push(i);
+        initialized = true;
+    }
+    if (!numbers.length) return;
+
+    messageEl.innerText = "";
+    pickerSound.currentTime = 0;
+    pickerSound.play();
+
+    let count = 0, idx = 0;
+    const timer = setInterval(() => {
+        idx = Math.floor(Math.random() * numbers.length);
+        numberEl.innerText = numbers[idx];
+        if (++count >= l) {
+            clearInterval(timer);
+            pickerSound.pause();
+            finishPick(idx);
+        }
+    }, 180);
+};
+
+function finishPick(i) {
+    const picked = numbers.splice(i,1)[0];
+    numberEl.innerText = picked;
+    numberEl.classList.add("winner");
+    messageEl.innerText = "🎉 CONGRATULATIONS 🎉";
+
+    cheerSound.currentTime = 0;
+    cheerSound.play();
+
+    startConfettiRain();
+    launchFireworks();
+
+    const d = document.createElement("div");
+    d.innerText = picked;
+    selectedList.appendChild(d);
+}
+
+resetBtn.onclick = () => {
+    numbers = [];
+    initialized = false;
+    numberEl.innerText = "?";
+    numberEl.classList.remove("winner");
+    messageEl.innerText = "";
+    selectedList.innerHTML = "";
+};
+
+/* ===== 5 SECOND CONFETTI RAIN ===== */
+function startConfettiRain() {
+    const end = Date.now() + 5000;
+    const interval = setInterval(() => {
+        if (Date.now() > end) return clearInterval(interval);
+        for (let i = 0; i < 20; i++) {
+            const c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = Math.random() * window.innerWidth + "px";
+            c.style.background = `hsl(${Math.random()*360},100%,50%)`;
+            c.style.animationDuration = (Math.random()*3 + 3) + "s";
+            document.body.appendChild(c);
+            setTimeout(()=>c.remove(),7000);
+        }
+    }, 200);
+}
+
+/* ===== FIREWORKS ===== */
+function launchFireworks() {
+    for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight / 2;
+            for (let j = 0; j < 40; j++) {
+                const f = document.createElement("div");
+                f.className = "firework";
+                f.style.left = x + "px";
+                f.style.top = y + "px";
+                f.style.background = `hsl(${Math.random()*360},100%,50%)`;
+                f.style.setProperty("--x", (Math.random()*300-150)+"px");
+                f.style.setProperty("--y", (Math.random()*300-150)+"px");
+                document.body.appendChild(f);
+                setTimeout(()=>f.remove(),1200);
+            }
+        }, i * 400);
+    }
+}
+</script>
+
+</body>
+</html>
